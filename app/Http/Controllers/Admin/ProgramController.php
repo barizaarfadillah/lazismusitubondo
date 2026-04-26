@@ -61,16 +61,26 @@ class ProgramController extends Controller
         return redirect()->route('program.index')->with('success', 'Program berhasil dibuat!');
     }
 
+    public function show(Program $program)
+    {
+        $program->load([
+            'kategori', 
+            'kabar_program' => fn($q) => $q->latest(),
+            'donasi' => fn($q) => $q->where('status', 'Berhasil')->latest() // Load donasi yang sukses
+        ]);
+
+        $jumlahDonatur = $program->donasi->count();
+
+        return view('admin.program.show', compact('program', 'jumlahDonatur'));
+    }
+
     /**
      * Form edit program.
      */
-    public function edit($id)
+    public function edit(Program $program)
     {
-        $program = Program::with('rekenings')->findOrFail($id);
         $kategori = Kategori::all();
         $rekening = Rekening::all();
-
-        // Mengambil ID rekening yang sudah terpilih untuk dicentang di view
         $selectedRekenings = $program->rekenings->pluck('id_rekening')->toArray();
 
         return view('admin.program.edit', compact('program', 'kategori', 'rekening', 'selectedRekenings'));
@@ -79,17 +89,15 @@ class ProgramController extends Controller
     /**
      * Perbarui data program.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Program $program)
     {
-        $program = Program::findOrFail($id);
-
         $request->validate([
             'nama_program'  => 'required|string|max:255',
             'id_kategori'   => 'required|exists:kategori,id_kategori',
             'target_dana'   => 'required|numeric',
             'deskripsi'     => 'required|string',
             'tenggat_waktu' => 'required|date',
-            'banner'        => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Ubah ke banner
+            'banner'        => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'rekening_ids'  => 'required|array',
         ]);
 
@@ -112,18 +120,13 @@ class ProgramController extends Controller
     /**
      * Hapus program.
      */
-    public function destroy($id)
+    public function destroy(Program $program)
     {
-        $program = Program::findOrFail($id);
-
-        // Hapus file gambar dari storage
-        if ($program->gambar) {
-            Storage::disk('public')->delete($program->gambar);
+        if ($program->banner) {
+            Storage::disk('public')->delete($program->banner);
         }
 
-        // Relasi di tabel pivot akan otomatis terhapus karena onDelete('cascade') di migrasi
         $program->delete();
-
-        return redirect()->route('program.index')->with('success', 'Program telah dihapus.');
+        return redirect()->route('program.index')->with('success', 'Program berhasil dihapus!');
     }
 }

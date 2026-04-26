@@ -40,7 +40,7 @@ class LoginController extends Controller
 
             // Redirect berdasarkan role
             if ($user->is_admin) {
-                return redirect('/dashboard');
+                return redirect('/admin/dashboard');
             } else {
                 return redirect('/donatur/dashboard');
             }

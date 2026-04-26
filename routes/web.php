@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\RekeningController;
+use App\Http\Controllers\Admin\KabarProgramController;
 
 // Rute awal diarahkan ke form login
 Route::get('/', function () {
@@ -37,6 +38,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('rekening', RekeningController::class)->except(['show']);
 
         Route::resource('program', ProgramController::class);
+        
+        Route::resource('kabar-program', KabarProgramController::class)->except(['index', 'show']);
         
     });
     Route::get('/donatur/dashboard', function () {

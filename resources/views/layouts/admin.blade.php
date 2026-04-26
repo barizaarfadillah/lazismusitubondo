@@ -19,13 +19,13 @@
     </style>
 </head>
 
-<body class="bg-gray-50 font-sans flex min-h-screen">
+<body class="bg-gray-50 font-sans flex min-h-screen overflow-x-hidden">
 
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden transition-opacity" onclick="toggleSidebar()"></div>
 
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-[#D35400] text-white flex flex-col shadow-xl transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-[#D35400] text-white flex flex-col shadow-xl transform -translate-x-full md:translate-x-0 md:sticky md:top-0 md:h-screen transition-transform duration-300 ease-in-out flex-shrink-0">
         
-        <div class="p-2 text-center border-b border-white/20 relative">
+        <div class="p-2 text-center border-b border-white/20 relative flex-shrink-0">
             <button onclick="toggleSidebar()" class="absolute top-4 right-4 text-white hover:text-gray-200 md:hidden">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
@@ -45,12 +45,12 @@
                 <span class="ml-2">Kelola Kategori</span>
             </a>
 
-            <a href="{{ route('program.index') }}" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
+            <a href="{{ route('program.index') }}" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200 {{ request()->is('admin/program*') ? 'bg-white/20 font-bold shadow-inner' : '' }}">
                 <i class="fa-solid fa-calendar-check w-6 text-center"></i>
                 <span class="ml-2">Kelola Program</span>
             </a>
 
-            <a href="{{ route('rekening.index') }}" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
+            <a href="{{ route('rekening.index') }}" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200 {{ request()->is('admin/rekening*') ? 'bg-white/20 font-bold shadow-inner' : '' }}">
                 <i class="fa-solid fa-money-check w-6 text-center"></i>
                 <span class="ml-2">Kelola Rekening</span>
             </a>
@@ -80,7 +80,7 @@
             </a>
         </nav>
 
-        <div class="p-4 border-t border-white/20 mt-auto">
+        <div class="p-4 border-t border-white/20 flex-shrink-0">
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="w-full flex items-center justify-center p-3 text-white bg-[#A14000] hover:bg-slate-800 hover:text-white rounded-xl transition duration-200">
@@ -93,7 +93,7 @@
 
     <div class="flex-1 flex flex-col min-w-0">
         
-        <header class="bg-white shadow-sm border-b px-6 py-4 flex justify-between items-center z-10 sticky top-0">
+        <header class="bg-white shadow-sm border-b px-6 py-4 flex justify-between items-center z-30 sticky top-0">
             <div class="flex items-center">
                 <button onclick="toggleSidebar()" class="mr-4 text-gray-500 hover:text-[#D35400] focus:outline-none md:hidden">
                     <i class="fa-solid fa-bars text-xl"></i>

@@ -3,6 +3,11 @@
 @section('header_title', 'Edit Program')
 
 @section('content')
+<div class="mb-6">
+        <a href="{{ route('program.show', $program) }}" class="text-sm font-bold text-gray-500 hover:text-[#D35400] transition flex items-center">
+            <i class="fa-solid fa-arrow-left mr-2"></i> Kembali ke Detail Program
+        </a>
+    </div>
 <div class="max-w-5xl bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
     <div class="mb-8 border-b pb-4 flex justify-between items-center">
         <div>
@@ -24,7 +29,7 @@
         </div>
     @endif
 
-    <form action="{{ route('program.update', $program->id_program) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('program.update', $program) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         

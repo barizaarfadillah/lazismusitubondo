@@ -45,4 +45,9 @@ class Program extends Model
     {
         return $this->belongsToMany(Rekening::class, 'detail_rekening_program', 'id_program', 'id_rekening');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
