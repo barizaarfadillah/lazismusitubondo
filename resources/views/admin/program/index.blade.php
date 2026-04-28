@@ -13,14 +13,27 @@
     </a>
 </div>
 
-@if(session('success'))
-    <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-6 rounded-r-lg">
-        <div class="flex items-center">
-            <i class="fa-solid fa-circle-check text-green-500"></i>
-            <p class="ml-3 text-sm text-green-700 font-medium">{{ session('success') }}</p>
+    @if(session('success'))
+        <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-6 rounded-r-lg">
+            <div class="flex">
+                <i class="fa-solid fa-circle-check text-green-500 mt-0.5"></i>
+                <p class="ml-3 text-sm text-green-700 font-medium">{{ session('success') }}</p>
+            </div>
         </div>
-    </div>
-@endif
+    @endif
+
+    @if($errors->any())
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-lg">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <div class="flex">
+                        <i class="fa-solid fa-times-circle text-red-500 mt-0.5"></i>
+                        <p class="ml-3 text-sm text-red-700 font-medium">{{ $error }}</p>
+                    </div>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
     
@@ -66,14 +79,14 @@
 
             <div class="mb-2 z-20 relative">
                 @php
-                    $terkumpul = $item->dana_terkumpul ?? 0;
+                    $terkumpul = $item->donasi_terkumpul ?? 0;
                     $target = $item->target_dana > 0 ? $item->target_dana : 1;
                     $persen = min(round(($terkumpul / $target) * 100), 100);
                 @endphp
                 <div class="flex justify-between items-end mb-1.5">
                     <div class="flex flex-col">
                         <span class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Terkumpul</span>
-                        <span class="text-sm font-black text-green-600">Rp {{ number_format($terkumpul, 0, ',', '.') }}</span>
+                        <span class="text-sm font-black text-green-600">Rp {{ number_format($item->donasi_terkumpul ?? 0, 0, ',', '.') }}</span>
                     </div>
                     <span class="text-[11px] font-black text-gray-700 bg-gray-100 px-2 py-0.5 rounded-lg">{{ $persen }}%</span>
                 </div>

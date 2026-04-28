@@ -20,9 +20,9 @@ class Program extends Model
         'status'
     ];
 
-    // Accessor untuk menghitung dana terkumpul otomatis
-    public function getDanaTerkumpulAttribute()
+    public function getDonasiTerkumpulAttribute()
     {
+        // Hanya menjumlahkan donasi dengan status 'Berhasil'
         return $this->donasi()->where('status', 'Berhasil')->sum('nominal');
     }
 

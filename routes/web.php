@@ -26,8 +26,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     
-    // Rute sementara untuk menguji keberhasilan login
-    Route::prefix('admin')->group(function () {
+    Route::middleware('admin')->prefix('admin')->group(function () {
         
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
@@ -42,6 +41,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('kabar-program', KabarProgramController::class)->except(['index', 'show']);
         
     });
+    // ---------------------------------------------------------------------
+
     Route::get('/donatur/dashboard', function () {
         return '
             <div style="text-align:center; margin-top:50px; font-family: sans-serif;">

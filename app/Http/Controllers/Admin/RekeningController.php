@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Rekening;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage; // Pastikan Facade ini di-import
+use Illuminate\Support\Facades\Storage;
 
 class RekeningController extends Controller
 {
@@ -28,6 +28,13 @@ class RekeningController extends Controller
             'no_rekening' => 'required|string|max:50|unique:rekening,no_rekening',
             'atas_nama' => 'required|string|max:100',
             'qris' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+        ], [
+            'nama_bank.required' => 'Nama bank wajib diisi.',
+            'no_rekening.required' => 'Nomor rekening wajib diisi.',
+            'no_rekening.unique' => 'Nomor rekening ini sudah terdaftar.',
+            'atas_nama.required' => 'Nama pemilik rekening wajib diisi.',
+            'logo.image' => 'Logo harus berupa gambar.',
+            'qris.image' => 'QRIS harus berupa gambar.',
         ]);
 
         $data = $request->all();
@@ -42,7 +49,7 @@ class RekeningController extends Controller
 
         Rekening::create($data);
 
-        return redirect()->route('rekening.index')->with('success', 'Rekening berhasil ditambahkan!');
+        return redirect()->route('rekening.index')->with('success', 'Data rekening berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -61,12 +68,15 @@ class RekeningController extends Controller
             'no_rekening' => 'required|string|max:50|unique:rekening,no_rekening,' . $id . ',id_rekening',
             'atas_nama' => 'required|string|max:100',
             'qris' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+        ], [
+            'nama_bank.required' => 'Nama bank wajib diisi.',
+            'no_rekening.required' => 'Nomor rekening wajib diisi.',
+            'no_rekening.unique' => 'Nomor rekening ini sudah digunakan.',
         ]);
 
         $data = $request->all();
 
         if ($request->hasFile('logo')) {
-            // Hapus logo lama jika ada
             if ($rekening->logo) {
                 Storage::disk('public')->delete($rekening->logo);
             }
@@ -74,7 +84,6 @@ class RekeningController extends Controller
         }
 
         if ($request->hasFile('qris')) {
-            // Hapus QRIS lama jika ada
             if ($rekening->qris) {
                 Storage::disk('public')->delete($rekening->qris);
             }
@@ -87,29 +96,42 @@ class RekeningController extends Controller
     }
 
     /**
-     * Hapus Rekening beserta file gambarnya.
+     * Hapus Rekening dengan penanganan relasi dan urutan storage yang benar.
      */
     public function destroy($id)
     {
         $rekening = Rekening::findOrFail($id);
         
+        // 1. REM DARURAT: Cek apakah rekening masih digunakan di program manapun
+        // Asumsi nama relasi di model Rekening adalah 'programs'
+        if ($rekening->programs()->exists()) {
+            return redirect()->route('rekening.index')->withErrors([
+                'error' => 'Gagal menghapus! Rekening ini masih terhubung dengan ' . $rekening->programs()->count() . ' program aktif.'
+            ]);
+        }
+
         try {
-            // 1. Hapus file logo dari storage jika ada
-            if ($rekening->logo) {
-                Storage::disk('public')->delete($rekening->logo);
-            }
+            // Simpan path file untuk dihapus nanti
+            $logoPath = $rekening->logo;
+            $qrisPath = $rekening->qris;
 
-            // 2. Hapus file QRIS dari storage jika ada
-            if ($rekening->qris) {
-                Storage::disk('public')->delete($rekening->qris);
-            }
-
-            // 3. Hapus data dari database
+            // 2. Hapus data dari database TERLEBIH DAHULU
             $rekening->delete();
 
-            return redirect()->route('rekening.index')->with('success', 'Rekening dan file terkait berhasil dihapus!');
+            // 3. Jika penghapusan database sukses, baru hapus file fisik di storage
+            if ($logoPath) {
+                Storage::disk('public')->delete($logoPath);
+            }
+            if ($qrisPath) {
+                Storage::disk('public')->delete($qrisPath);
+            }
+
+            return redirect()->route('rekening.index')->with('success', 'Rekening berhasil dihapus secara permanen.');
+
         } catch (\Exception $e) {
-            return redirect()->route('rekening.index')->withErrors(['error' => 'Gagal menghapus! Rekening ini mungkin masih terhubung dengan program donasi aktif.']);
+            return redirect()->route('rekening.index')->withErrors([
+                'error' => 'Terjadi kesalahan sistem: Data rekening tidak dapat dihapus.'
+            ]);
         }
     }
 }

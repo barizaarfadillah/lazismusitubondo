@@ -15,4 +15,9 @@ class Rekening extends Model
     {
         return $this->hasMany(Donasi::class, 'id_rekening', 'id_rekening');
     }
+
+    public function programs()
+    {
+        return $this->belongsToMany(Program::class, 'detail_rekening_program', 'id_rekening', 'id_program');
+    }
 }

@@ -13,6 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         
+        // Mendaftarkan alias middleware IsAdmin (Perbaikan LOG-04)
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\IsAdmin::class,
+        ]);
+
         // 1. Jika belum login mencoba akses halaman dalam, lempar ke form login
         $middleware->redirectGuestsTo('/login');
 

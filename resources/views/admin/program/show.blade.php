@@ -40,14 +40,14 @@
                 <div class="space-y-3.5">
                     <div>
                         <div class="flex items-baseline gap-1">
-                            <span class="text-3xl lg:text-2xl font-black text-[#D35400]">Rp {{ number_format($program->dana_terkumpul, 0, ',', '.') }}</span>
+                            <span class="text-3xl lg:text-2xl font-black text-[#D35400]">Rp {{ number_format($program->donasi_terkumpul ?? 0, 0, ',', '.') }}</span>
                         </div>
                         <p class="text-xs text-gray-400 font-medium italic mt-1 uppercase tracking-tighter">Dana Terkumpul</p>
                     </div>
 
                     @php
                         $target = $program->target_dana > 0 ? $program->target_dana : 1;
-                        $persen = min(round(($program->dana_terkumpul / $target) * 100), 100);
+                        $persen = min(round(($program->donasi_terkumpul / $target) * 100), 100);
                     @endphp
                     <div class="space-y-3">
                         <div class="w-full bg-gray-100 rounded-full h-3.5 overflow-hidden shadow-inner">
@@ -172,34 +172,41 @@
             </div>
 
             <div id="content-donatur" class="hidden animate-fadeIn">
-                <div class="max-w-4xl mx-auto space-y-6">
-                    @forelse($program->donasi->take(10) as $donasi)
-                        <div class="flex items-start p-4 border-b border-gray-50 last:border-0 transition hover:bg-gray-50/50 rounded-2xl">
-                            <div class="h-12 w-12 bg-gray-100 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden border border-gray-100 shadow-inner">
-                                <i class="fa-solid fa-user text-gray-300 text-xl"></i>
-                            </div>
-                            
-                            <div class="ml-5 flex-1">
-                                <div class="flex justify-between items-center">
-                                    <h4 class="text-sm font-black text-gray-800">
-                                        {{ $donasi->is_anonim ? 'Hamba Allah' : ($donasi->nama ?? 'Donatur') }}
-                                    </h4>
-                                    <span class="text-sm font-black text-[#D35400]">
-                                        Rp {{ number_format($donasi->nominal, 0, ',', '.') }}
-                                    </span>
+                <div class="space-y-3">
+                    @forelse($program->donasi as $donatur)
+                        <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center justify-between gap-4">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold shrink-0">
+                                    <i class="fa-solid fa-user"></i>
                                 </div>
-                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tight mb-2">
-                                    {{ $donasi->created_at->translatedFormat('d F Y') }}
+                                
+                                <div>
+                                    <p class="font-bold text-gray-800 text-sm">
+                                        {{ $donatur->is_anonim ? 'Hamba Allah' : ($donatur->user->name ?? 'Donatur') }}
+                                    </p>
+                                    
+                                    {{-- Menampilkan Pesan Doa jika ada --}}
+                                    @if($donatur->pesan_doa)
+                                        <p class="text-xs text-gray-500 italic mt-1 leading-relaxed">
+                                            "{{ $donatur->pesan_doa }}"
+                                        </p>
+                                    @endif
+                                    
+                                    <p class="text-[10px] text-gray-400 mt-1 uppercase font-bold tracking-tighter">
+                                        {{ \Carbon\Carbon::parse($donatur->tanggal_donasi)->diffForHumans() }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="text-right shrink-0">
+                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Nominal</p>
+                                <p class="text-sm font-black text-[#D35400]">
+                                    Rp {{ number_format($donatur->nominal, 0, ',', '.') }}
                                 </p>
-                                @if($donasi->pesan)
-                                    <div class="bg-orange-50/50 p-3 rounded-xl border border-orange-100/50">
-                                        <p class="text-xs text-gray-600 italic">"{{ $donasi->pesan }}"</p>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     @empty
-                        <div class="text-center py-20 bg-gray-50 rounded-[2.5rem] border-2 border-dashed border-gray-200">
+                        <div class="text-center py-10 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
                             <i class="fa-solid fa-heart-pulse text-5xl text-gray-200 mb-4"></i>
                             <p class="text-gray-400 font-medium italic">Belum ada donatur untuk program ini.</p>
                         </div>

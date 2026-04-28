@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Kategori; // Pastikan Model Kategori sudah di-import
+use App\Models\Kategori;
+use Illuminate\Database\QueryException;
 
 class KategoriController extends Controller
 {
@@ -13,9 +14,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        // Mengambil semua data kategori dari database
         $kategori = Kategori::all(); 
-        
         return view('admin.kategori.index', compact('kategori'));
     }
 
@@ -32,21 +31,17 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. Validasi input
         $request->validate([
-            // Asumsi nama tabel di database adalah 'kategori'
             'nama_kategori' => 'required|string|max:255|unique:kategori,nama_kategori', 
         ], [
             'nama_kategori.required' => 'Nama kategori wajib diisi.',
-            'nama_kategori.unique' => 'Kategori ini sudah terdaftar. Silakan gunakan nama lain.',
+            'nama_kategori.unique'   => 'Kategori ini sudah terdaftar. Silakan gunakan nama lain.',
         ]);
 
-        // 2. Simpan ke database
         Kategori::create([
             'nama_kategori' => $request->nama_kategori,
         ]);
 
-        // 3. Redirect kembali ke halaman index dengan pesan sukses
         return redirect()->route('kategori.index')->with('success', 'Kategori baru berhasil ditambahkan!');
     }
 
@@ -62,11 +57,10 @@ class KategoriController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            // Validasi unik, namun abaikan ID kategori yang sedang diedit saat ini
             'nama_kategori' => 'required|string|max:255|unique:kategori,nama_kategori,' . $id . ',id_kategori',
         ], [
             'nama_kategori.required' => 'Nama kategori wajib diisi.',
-            'nama_kategori.unique' => 'Kategori ini sudah terdaftar.',
+            'nama_kategori.unique'   => 'Nama kategori ini sudah digunakan oleh kategori lain.',
         ]);
 
         $kategori = Kategori::findOrFail($id);
@@ -78,15 +72,29 @@ class KategoriController extends Controller
     }
 
     /**
-     * Menghapus data kategori dari database.
+     * Menghapus data kategori dari database dengan penanganan relasi.
      */
     public function destroy($id)
     {
-        // Cari data kategori berdasarkan ID, lalu hapus
         $kategori = Kategori::findOrFail($id);
-        $kategori->delete();
 
-        // Redirect kembali ke halaman index dengan pesan sukses
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus!');
+        // 1. Cek manual apakah kategori ini masih memiliki program terkait
+        // Pastikan Anda sudah mendefinisikan relasi 'program' di model Kategori
+        if ($kategori->program()->exists()) {
+            return redirect()->route('kategori.index')->withErrors([
+                'error' => 'Gagal menghapus! Kategori "' . $kategori->nama_kategori . '" masih memiliki ' . $kategori->program()->count() . ' program donasi aktif. Silakan hapus atau pindahkan program tersebut terlebih dahulu.'
+            ]);
+        }
+
+        try {
+            // 2. Jika tidak ada relasi, baru jalankan fungsi hapus
+            $kategori->delete();
+            return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus!');
+            
+        } catch (\Exception $e) {
+            return redirect()->route('kategori.index')->withErrors([
+                'error' => 'Terjadi kesalahan sistem saat mencoba menghapus kategori.'
+            ]);
+        }
     }
 }

@@ -26,7 +26,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'], 
         ], [
             // 2. Kustomisasi Pesan Error (Bahasa Indonesia)
-            'email.unique' => 'Alamat email ini sudah terdaftar di sistem kami.',
+            'email.unique' => 'Alamat email ini sudah terdaftar.',
             'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
             'password.min' => 'Kata sandi minimal harus 8 karakter.',
             'email.email' => 'Format alamat email tidak valid.',

@@ -16,10 +16,23 @@
 
     @if(session('success'))
         <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-6 rounded-r-lg">
-            <div class="flex items-center">
-                <i class="fa-solid fa-circle-check text-green-500"></i>
+            <div class="flex">
+                <i class="fa-solid fa-circle-check text-green-500 mt-0.5"></i>
                 <p class="ml-3 text-sm text-green-700 font-medium">{{ session('success') }}</p>
             </div>
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-lg">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <div class="flex">
+                        <i class="fa-solid fa-times-circle text-red-500 mt-0.5"></i>
+                        <p class="ml-3 text-sm text-red-700 font-medium">{{ $error }}</p>
+                    </div>
+                @endforeach
+            </ul>
         </div>
     @endif
 

@@ -23,6 +23,19 @@
         </div>
     @endif
 
+    @if($errors->any())
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-lg">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <div class="flex">
+                        <i class="fa-solid fa-times-circle text-red-500 mt-0.5"></i>
+                        <p class="ml-3 text-sm text-red-700 font-medium">{{ $error }}</p>
+                    </div>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="overflow-x-auto no-scrollbar">
         <table class="w-full text-left border-collapse min-w-[500px]">
             <thead>
