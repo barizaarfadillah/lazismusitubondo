@@ -8,10 +8,12 @@ use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\RekeningController;
 use App\Http\Controllers\Admin\KabarProgramController;
 
-// Rute awal diarahkan ke form login
-Route::get('/', function () {
-    return redirect('/login');
-});
+// --- TAMBAHAN SPRINT 2 ---
+use App\Http\Controllers\DonasiController;
+
+// Rute Publik: Halaman Utama sekarang menampilkan Katalog Program Donasi
+Route::get('/', [DonasiController::class, 'index'])->name('donasi.index');
+// -------------------------
 
 // Kelompok rute untuk pengunjung yang BELUM login
 Route::middleware('guest')->group(function () {
@@ -26,6 +28,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     
+    // Kelompok rute khusus ADMIN
     Route::middleware('admin')->prefix('admin')->group(function () {
         
         Route::get('/dashboard', function () {
@@ -41,8 +44,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('kabar-program', KabarProgramController::class)->except(['index', 'show']);
         
     });
-    // ---------------------------------------------------------------------
 
+    // Kelompok rute khusus DONATUR (Akan kita rapikan di modul Dashboard Donatur nanti)
     Route::get('/donatur/dashboard', function () {
         return '
             <div style="text-align:center; margin-top:50px; font-family: sans-serif;">

@@ -46,7 +46,7 @@ class RegisterController extends Controller
 
             Auth::login($user);
 
-            return redirect('/donatur/dashboard')->with('success', 'Selamat, akun Anda berhasil dibuat!');
+            return redirect('/')->with('success', 'Selamat, akun Anda berhasil dibuat!');
 
         } catch (\Exception $e) {
             // Penanganan jika terjadi error database tak terduga

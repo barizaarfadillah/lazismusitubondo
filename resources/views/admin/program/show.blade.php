@@ -177,12 +177,12 @@
                         <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center justify-between gap-4">
                             <div class="flex items-start gap-4">
                                 <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold shrink-0">
-                                    <i class="fa-solid fa-user"></i>
+                                    {{ substr($donatur->user->nama ?? 'A', 0, 1) }}
                                 </div>
                                 
                                 <div>
                                     <p class="font-bold text-gray-800 text-sm">
-                                        {{ $donatur->is_anonim ? 'Hamba Allah' : ($donatur->user->name ?? 'Donatur') }}
+                                        {{ $donatur->is_anonim ? 'Hamba Allah' : ($donatur->user->nama ?? 'Donatur') }}
                                     </p>
                                     
                                     {{-- Menampilkan Pesan Doa jika ada --}}
