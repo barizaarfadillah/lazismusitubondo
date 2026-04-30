@@ -13,6 +13,7 @@ use App\Http\Controllers\DonasiController;
 
 // Rute Publik: Halaman Utama sekarang menampilkan Katalog Program Donasi
 Route::get('/', [DonasiController::class, 'index'])->name('donasi.index');
+Route::get('/program/{slug}', [DonasiController::class, 'show'])->name('donasi.show');
 // -------------------------
 
 // Kelompok rute untuk pengunjung yang BELUM login

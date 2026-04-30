@@ -29,4 +29,28 @@ class DonasiController extends Controller
 
         return view('donasi.index', compact('programs', 'categories'));
     }
+
+    public function show($slug)
+    {
+        $program = Program::with(['kategori', 'kabar_program' => function($q) {
+                $q->latest();
+            }])
+            ->withSum(['donasi as donasi_terkumpul' => function($q) {
+                $q->where('status', 'Berhasil');
+            }], 'nominal')
+            ->withCount(['donasi as jumlah_donatur' => function($q) {
+                $q->where('status', 'Berhasil');
+            }])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        // Ambil daftar donatur terbaru yang berhasil
+        $donaturList = $program->donasi()
+            ->where('status', 'Berhasil')
+            ->latest()
+            ->take(10)
+            ->get();
+
+        return view('donasi.show', compact('program', 'donaturList'));
+    }
 }
