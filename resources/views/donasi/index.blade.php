@@ -6,7 +6,18 @@
 <div class="bg-gray-50 min-h-screen pb-20">
     
     <div class="bg-white border-b border-gray-100 py-12 mb-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
+        @if(session('success'))
+            <div class="max-w-7xl mx-auto text-center p-4 bg-green-50 border border-green-200 rounded-2xl flex items-center gap-3 shadow-sm mb-6">
+                <div class="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-sm shrink-0">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <p class="text-sm text-green-800 font-medium">
+                    {{ session('success') }}
+                </p>
+            </div>
+        @endif
+        
+        <div class="max-w-7xl mx-auto px-4 pt-4 text-center">
             <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-4">Pilih Program Kebaikanmu</h1>
             <p class="text-gray-500 max-w-2xl mx-auto">Salurkan bantuan Anda untuk saudara kita yang membutuhkan melalui program-program pilihan Lazismu Situbondo.</p>
         </div>
@@ -92,6 +103,40 @@
         </div>
     </div>
 </div>
+
+@if(session('donasi_berhasil'))
+    <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center px-4">
+        <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="closeModal()"></div>
+        
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center shadow-2xl z-10 relative border border-gray-100 animate-fade-in">
+            <div class="w-16 h-16 bg-green-50 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-5">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            
+            <h3 class="text-lg font-black text-gray-900 mb-2">Alhamdulillah, Terima Kasih!</h3>
+            
+            <p class="text-xs text-gray-500 leading-relaxed mb-6">
+                Donasi Anda sedang diproses. Kuitansi akan tersedia di riwayat donasi setelah diverifikasi admin.
+            </p>
+            
+            <div class="flex flex-col gap-3">
+                <a href="{{ route('donasi.index') }}" class="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-bold text-sm hover:bg-gray-200 transition">
+                    Kembali ke Katalog
+                </a>
+                
+                <a href="{{ url('/donatur/dashboard') }}" class="w-full bg-lazismu text-white py-3 rounded-xl font-bold text-sm hover:bg-lazismu_hover transition shadow-sm">
+                    Lihat Riwayat Donasi
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function closeModal() {
+            document.getElementById('successModal').remove();
+        }
+    </script>
+@endif
 
 <style>
     /* Menghilangkan scrollbar pada filter kategori tapi tetap bisa di-scroll */
