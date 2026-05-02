@@ -37,12 +37,19 @@
                 </div>
                 <div class="flex flex-col items-center justify-center pt-2 gap-3">
                     @if(!empty($rekening->qris) || isset($rekening->qris))
-                        <div class="w-full h-full bg-white p-3 border border-gray-200 rounded-lg shadow-sm flex items-center justify-center">
-                            <img src="{{ asset('storage/' . $rekening->qris) }}" alt="QRIS {{ $rekening->nama_bank }}" class="w-full h-full object-contain">
+                        <div class="w-full max-w-[250px] bg-white p-3 border border-gray-200 rounded-lg shadow-sm flex items-center justify-center mx-auto">
+                            <img src="{{ asset('storage/' . $rekening->qris) }}" alt="QRIS {{ $rekening->nama_bank }}" class="w-full h-auto object-contain">
                         </div>
-                        <div class="flex flex-col items-center gap-1 mt-1">
-                            <span class="text-[10px] font-black text-lazismu tracking-widest uppercase">Scan QRIS untuk Pembayaran</span>
-                            <span class="text-[9px] text-gray-400">Pastikan nominal sesuai dengan tagihan Anda</span>
+                        
+                        <div class="flex flex-col items-center gap-2 mt-1 w-full">
+                            <div class="text-center">
+                                <span class="block text-[10px] font-black text-lazismu tracking-widest uppercase">Scan QRIS untuk Pembayaran</span>
+                                <span class="block text-[9px] text-gray-400">Pastikan nominal sesuai dengan tagihan Anda</span>
+                            </div>
+                            
+                            <a href="{{ asset('storage/' . $rekening->qris) }}" download="QRIS_{{ str_replace(' ', '_', $rekening->atas_nama) }}" class="inline-flex items-center justify-center gap-2 px-5 py-2 mt-1 bg-white border border-gray-300 text-gray-700 text-xs font-bold rounded-lg hover:bg-gray-50 transition shadow-sm w-full max-w-[250px]">
+                                <i class="fa-solid fa-download"></i> Simpan QRIS
+                            </a>
                         </div>
                     @else
                         <div class="text-center text-xs text-gray-400 italic py-2">

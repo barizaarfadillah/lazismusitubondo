@@ -69,18 +69,11 @@
                                 </div>
                                 
                                 <div class="py-1">
-                                    <a href="{{ url('/donatur/dashboard') }}" class="flex items-center px-5 py-3 text-sm text-gray-600 hover:bg-orange-50 hover:text-lazismu transition">
+                                    <a href="{{ route('donatur.dashboard') }}" class="flex items-center px-5 py-3 text-sm text-gray-600 hover:bg-orange-50 hover:text-lazismu transition">
                                         <div class="w-8">
                                             <i class="fa-solid fa-gauge-high"></i>
                                         </div>
                                         <span>Dashboard</span>
-                                    </a>
-                                    
-                                    <a href="{{ url('/donatur/profil') }}" class="flex items-center px-5 py-3 text-sm text-gray-600 hover:bg-orange-50 hover:text-lazismu transition">
-                                        <div class="w-8">
-                                            <i class="fa-solid fa-user-gear"></i>
-                                        </div>
-                                        <span>Pengaturan Profil</span>
                                     </a>
                                 </div>
 

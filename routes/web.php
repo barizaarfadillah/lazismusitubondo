@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\RekeningController;
 use App\Http\Controllers\Admin\KabarProgramController;
 use App\Http\Controllers\DonasiController;
+use App\Http\Controllers\DonaturController; // <-- TAMBAHAN BARU: Memanggil DonaturController
 
 // [PUBLIK] Katalog dan Detail: Bisa diakses siapa saja
 Route::get('/', [DonasiController::class, 'index'])->name('donasi.index');
@@ -52,8 +53,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('kabar-program', KabarProgramController::class)->except(['index', 'show']);
     });
 
-    // Dashboard Donatur
-    Route::get('/donatur/dashboard', function () {
-        return view('donatur.dashboard'); // Asumsi nanti akan dibuat filenya
+    // --- REVISI: Kelompok rute khusus DONATUR ---
+    Route::name('donatur.')->group(function () {
+        Route::get('/dashboard', [DonaturController::class, 'index'])->name('dashboard');
+        Route::get('/riwayat', [DonaturController::class, 'riwayat'])->name('riwayat');
+        Route::get('/riwayat/{kode_transaksi}', [DonaturController::class, 'show'])->name('riwayat.detail');
+        Route::get('/riwayat/{kode_transaksi}/kuitansi', [DonaturController::class, 'kuitansi'])->name('riwayat.kuitansi');
+        Route::get('/profil', [DonaturController::class, 'profil'])->name('profil');
     });
 });
