@@ -66,12 +66,12 @@
             </a>
 
             <div class="pt-4 pb-2 text-xs font-semibold text-orange-200 uppercase tracking-wider">Transaksi</div>
-
+            
             <a href="#" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
                 <i class="fa-solid fa-hand-holding-dollar w-6 text-center"></i>
                 <span class="ml-2">Verifikasi Donasi</span>
             </a>
-
+            
             <div class="pt-4 pb-2 text-xs font-semibold text-orange-200 uppercase tracking-wider">Laporan</div>
 
             <a href="#" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
@@ -80,15 +80,6 @@
             </a>
         </nav>
 
-        <div class="p-4 border-t border-white/20 flex-shrink-0">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="w-full flex items-center justify-center p-3 text-white bg-[#A14000] hover:bg-slate-800 hover:text-white rounded-xl transition duration-200">
-                    <i class="fa-solid fa-right-from-bracket mr-2"></i>
-                    <span class="font-bold">Keluar</span>
-                </button>
-            </form>
-        </div>
     </aside>
 
     <div class="flex-1 flex flex-col min-w-0">
@@ -101,10 +92,39 @@
                 <h1 class="text-xl font-bold text-gray-800 truncate">@yield('header_title', 'Dashboard')</h1>
             </div>
             
-            <div class="flex items-center space-x-3 border px-4 py-2 rounded-full bg-gray-50 flex-shrink-0">
-                <span class="text-sm font-semibold text-gray-700 hidden sm:block">{{ Auth::user()->nama ?? 'Admin' }}</span>
-                <div class="h-8 w-8 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-sm">
-                    {{ substr(Auth::user()->nama ?? 'A', 0, 1) }}
+            <div class="relative">
+                <button onclick="toggleDropdown()" class="flex items-center focus:outline-none transform transition hover:scale-105 group">
+                    <p class="text-sm font-bold text-gray-800 truncate px-4" title="{{ Auth::user()->nama ?? 'Donatur' }}">
+                        {{ Auth::user()->nama ?? 'Donatur Lazismu' }}
+                    </p>
+                    <div class="h-8 w-8 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-sm">
+                        {{ substr(Auth::user()->nama ?? 'A', 0, 1) }}
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-[10px] ml-2 text-gray-400 group-hover:text-lazismu"></i>
+                </button>
+
+                <div id="userDropdown" class="hidden absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl py-2 border border-gray-100 ring-1 ring-black ring-opacity-5 z-[100] animate-in fade-in slide-in-from-top-2 duration-200">
+                    
+                    <div class="py-1">                        
+                        <a href="#" class="flex items-center px-5 py-3 text-sm text-gray-600 hover:bg-orange-50 hover:text-lazismu transition">
+                            <div class="w-8">
+                                <i class="fa-solid fa-user-gear"></i>
+                            </div>
+                            <span>Profil Saya</span>
+                        </a>
+                    </div>
+
+                    <div class="border-t border-gray-50 mt-1">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="w-full text-left flex items-center px-5 py-3 text-sm text-red-600 hover:bg-red-50 transition font-medium">
+                                <div class="w-8">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                </div>
+                                <span>Keluar</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </header>
@@ -121,6 +141,21 @@
             
             sidebar.classList.toggle('-translate-x-full');
             overlay.classList.toggle('hidden');
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Menutup dropdown jika pengguna mengklik di luar area dropdown
+        window.onclick = function(event) {
+            if (!event.target.closest('.relative')) {
+                const dropdown = document.getElementById('userDropdown');
+                if (!dropdown.classList.contains('hidden')) {
+                    dropdown.classList.add('hidden');
+                }
+            }
         }
     </script>
 
