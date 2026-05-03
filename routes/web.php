@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\RekeningController;
 use App\Http\Controllers\Admin\KabarProgramController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\DonaturController; // <-- TAMBAHAN BARU: Memanggil DonaturController
 
@@ -51,6 +52,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('rekening', RekeningController::class)->except(['show']);
         Route::resource('program', ProgramController::class);
         Route::resource('kabar-program', KabarProgramController::class)->except(['index', 'show']);
+        Route::get('/profil', [DashboardController::class, 'profil'])->name('admin.profil');
+        Route::patch('/profil/update', [DashboardController::class, 'updateProfil'])->name('admin.profil.update');
     });
 
     // --- REVISI: Kelompok rute khusus DONATUR ---
@@ -60,5 +63,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/riwayat/{kode_transaksi}', [DonaturController::class, 'show'])->name('riwayat.detail');
         Route::get('/riwayat/{kode_transaksi}/kuitansi', [DonaturController::class, 'kuitansi'])->name('riwayat.kuitansi');
         Route::get('/profil', [DonaturController::class, 'profil'])->name('profil');
+        Route::patch('/profil/update', [DonaturController::class, 'updateProfil'])->name('profil.update');
     });
 });

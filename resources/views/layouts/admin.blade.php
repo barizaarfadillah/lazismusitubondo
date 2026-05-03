@@ -106,7 +106,7 @@
                 <div id="userDropdown" class="hidden absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl py-2 border border-gray-100 ring-1 ring-black ring-opacity-5 z-[100] animate-in fade-in slide-in-from-top-2 duration-200">
                     
                     <div class="py-1">                        
-                        <a href="#" class="flex items-center px-5 py-3 text-sm text-gray-600 hover:bg-orange-50 hover:text-lazismu transition">
+                        <a href="{{ route('admin.profil') }}" class="flex items-center px-5 py-3 text-sm text-gray-600 hover:bg-orange-50 hover:text-lazismu transition">
                             <div class="w-8">
                                 <i class="fa-solid fa-user-gear"></i>
                             </div>

@@ -14,7 +14,7 @@ class User extends Authenticatable
     protected $primaryKey = 'id_user'; // Kunci primary key
 
     protected $fillable = [
-        'nama', 'email', 'password', 'no_telp', 'alamat', 'foto', 'is_admin', 'status_user'
+        'nama', 'email', 'password', 'no_telp', 'alamat', 'is_admin', 'status_user'
     ];
 
     protected $hidden = [
