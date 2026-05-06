@@ -8,8 +8,9 @@ use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\RekeningController;
 use App\Http\Controllers\Admin\KabarProgramController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\KelolaDonaturController;
 use App\Http\Controllers\DonasiController;
-use App\Http\Controllers\DonaturController; // <-- TAMBAHAN BARU: Memanggil DonaturController
+use App\Http\Controllers\DonaturController;
 
 // [PUBLIK] Katalog dan Detail: Bisa diakses siapa saja
 Route::get('/', [DonasiController::class, 'index'])->name('donasi.index');
@@ -54,6 +55,14 @@ Route::middleware('auth')->group(function () {
         Route::resource('kabar-program', KabarProgramController::class)->except(['index', 'show']);
         Route::get('/profil', [DashboardController::class, 'profil'])->name('admin.profil');
         Route::patch('/profil/update', [DashboardController::class, 'updateProfil'])->name('admin.profil.update');
+        Route::get('/donatur', [KelolaDonaturController::class, 'index'])->name('admin.donatur.index');
+        Route::get('/donatur/create', [KelolaDonaturController::class, 'create'])->name('admin.donatur.create');
+        Route::post('/donatur', [KelolaDonaturController::class, 'store'])->name('admin.donatur.store');
+        Route::get('/donatur/{id}', [KelolaDonaturController::class, 'show'])->name('admin.donatur.show');
+        Route::get('/donatur/{id}/edit', [KelolaDonaturController::class, 'edit'])->name('admin.donatur.edit');
+        Route::put('/donatur/{id}', [KelolaDonaturController::class, 'update'])->name('admin.donatur.update');
+        Route::delete('/donatur/{id}', [KelolaDonaturController::class, 'destroy'])->name('admin.donatur.destroy');
+        Route::post('/donatur/{id}/aktifkan', [KelolaDonaturController::class, 'aktifkan'])->name('admin.donatur.aktifkan');
     });
 
     // --- REVISI: Kelompok rute khusus DONATUR ---

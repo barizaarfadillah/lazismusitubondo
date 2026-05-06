@@ -55,7 +55,7 @@
                 <span class="ml-2">Kelola Rekening</span>
             </a>
 
-            <a href="#" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
+            <a href="{{ route('admin.donatur.index') }}" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
                 <i class="fa-solid fa-users w-6 text-center"></i>
                 <span class="ml-2">Kelola Donatur</span>
             </a>

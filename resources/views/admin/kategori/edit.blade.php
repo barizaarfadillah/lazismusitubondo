@@ -3,7 +3,14 @@
 @section('header_title', 'Edit Kategori')
 
 @section('content')
+<div class="mb-6">
+    <a href="{{ route('kategori.index') }}" class="text-sm font-bold text-gray-500 hover:text-[#D35400] transition flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Kembali ke Daftar Kategori Program
+    </a>
+</div>
+
 <div class="max-w-2xl bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
+
     <div class="mb-6 border-b pb-4">
         <h2 class="text-xl font-bold text-gray-800">Edit Kategori</h2>
         <p class="text-sm text-gray-500 mt-1">Ubah nama kategori program donasi.</p>

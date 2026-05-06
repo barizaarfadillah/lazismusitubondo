@@ -3,6 +3,12 @@
 @section('header_title', 'Edit Rekening')
 
 @section('content')
+<div class="mb-6">
+    <a href="{{ route('rekening.index') }}" class="text-sm font-bold text-gray-500 hover:text-[#D35400] transition flex items-center">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Kembali ke Daftar Rekening Donasi
+    </a>
+</div>
+
 <div class="max-w-4xl bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
     <div class="mb-6 border-b pb-4">
         <h2 class="text-xl font-bold text-gray-800">Edit Rekening</h2>
