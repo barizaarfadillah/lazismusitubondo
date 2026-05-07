@@ -60,7 +60,7 @@
                 <span class="ml-2">Kelola Donatur</span>
             </a>
 
-            <a href="#" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
+            <a href="{{ route('admin.admin.index') }}" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
                 <i class="fa-solid fa-user-shield w-6 text-center"></i>
                 <span class="ml-2">Kelola Admin</span>
             </a>
