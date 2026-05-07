@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('header_title', 'Kelola Admin')
+
 @section('content')
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6">
     <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
