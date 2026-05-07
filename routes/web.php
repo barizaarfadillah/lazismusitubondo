@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\KabarProgramController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KelolaDonaturController;
 use App\Http\Controllers\Admin\KelolaAdminController;
+use App\Http\Controllers\Admin\VerifikasiDonasiController;
 use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\DonaturController;
 
@@ -83,6 +84,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/{id}/edit', [KelolaAdminController::class, 'edit'])->name('admin.admin.edit');
         Route::put('/admin/{id}', [KelolaAdminController::class, 'update'])->name('admin.admin.update');
         Route::delete('/admin/{id}', [KelolaAdminController::class, 'destroy'])->name('admin.admin.destroy');
+
+        // Rute verifikasi donasi
+        Route::get('/verifikasi-donasi', [VerifikasiDonasiController::class, 'index'])->name('admin.verifikasi.index');
+        Route::get('/verifikasi-donasi/{id}', [VerifikasiDonasiController::class, 'show'])->name('admin.verifikasi.show');
+        Route::put('/verifikasi-donasi/{id}/terima', [VerifikasiDonasiController::class, 'terima'])->name('admin.verifikasi.terima');
+        Route::put('/verifikasi-donasi/{id}/tolak', [VerifikasiDonasiController::class, 'tolak'])->name('admin.verifikasi.tolak');
     });
 
     // Rute khusus DONATUR

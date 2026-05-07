@@ -67,7 +67,7 @@
 
             <div class="pt-4 pb-2 text-xs font-semibold text-orange-200 uppercase tracking-wider">Transaksi</div>
             
-            <a href="#" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
+            <a href="{{ route('admin.verifikasi.index') }}" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
                 <i class="fa-solid fa-hand-holding-dollar w-6 text-center"></i>
                 <span class="ml-2">Verifikasi Donasi</span>
             </a>
