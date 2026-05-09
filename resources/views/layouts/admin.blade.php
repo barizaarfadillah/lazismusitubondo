@@ -74,7 +74,7 @@
             
             <div class="pt-4 pb-2 text-xs font-semibold text-orange-200 uppercase tracking-wider">Laporan</div>
 
-            <a href="#" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
+            <a href="{{ route('admin.laporan.index') }}" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200">
                 <i class="fa-solid fa-file-invoice-dollar w-6 text-center"></i>
                 <span class="ml-2">Laporan Donasi</span>
             </a>
@@ -89,7 +89,6 @@
                 <button onclick="toggleSidebar()" class="mr-4 text-gray-500 hover:text-[#D35400] focus:outline-none md:hidden">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
-                <h1 class="text-xl font-bold text-gray-800 truncate">@yield('header_title', 'Dashboard')</h1>
             </div>
             
             <div class="relative">

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KelolaDonaturController;
 use App\Http\Controllers\Admin\KelolaAdminController;
 use App\Http\Controllers\Admin\VerifikasiDonasiController;
+use App\Http\Controllers\Admin\LaporanDonasiController;
 use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\DonaturController;
 
@@ -49,9 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('admin')->prefix('admin')->group(function () {
         
         // Rute dashboard Admin
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('admin.dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
         // Rute kelola kategori
         Route::resource('kategori', KategoriController::class)->except(['show']);
@@ -90,6 +89,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/verifikasi-donasi/{id}', [VerifikasiDonasiController::class, 'show'])->name('admin.verifikasi.show');
         Route::put('/verifikasi-donasi/{id}/terima', [VerifikasiDonasiController::class, 'terima'])->name('admin.verifikasi.terima');
         Route::put('/verifikasi-donasi/{id}/tolak', [VerifikasiDonasiController::class, 'tolak'])->name('admin.verifikasi.tolak');
+
+        // Rute laporan donasi
+        Route::get('/laporan-donasi', [LaporanDonasiController::class, 'index'])->name('admin.laporan.index');
+        Route::get('/laporan-donasi/cetak', [LaporanDonasiController::class, 'cetak'])->name('admin.laporan.cetak');
     });
 
     // Rute khusus DONATUR
