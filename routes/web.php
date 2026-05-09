@@ -15,12 +15,12 @@ use App\Http\Controllers\Admin\LaporanDonasiController;
 use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\DonaturController;
 
+// Rute Katalog dan Detail Program
+Route::get('/', [DonasiController::class, 'index'])->name('donasi.index');
+Route::get('/program/{slug}', [DonasiController::class, 'show'])->name('donasi.show');
+
 // Rute untuk pengunjung yang BELUM login
 Route::middleware('guest')->group(function () {
-
-    // Rute Katalog dan Detail Program
-    Route::get('/', [DonasiController::class, 'index'])->name('donasi.index');
-    Route::get('/program/{slug}', [DonasiController::class, 'show'])->name('donasi.show');
 
     // Rute login
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
