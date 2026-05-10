@@ -15,8 +15,11 @@ use App\Http\Controllers\Admin\LaporanDonasiController;
 use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\DonaturController;
 
+// Rute Landing page
+Route::get('/', [DonasiController::class, 'landing'])->name('landing');
+
 // Rute Katalog dan Detail Program
-Route::get('/', [DonasiController::class, 'index'])->name('donasi.index');
+Route::get('/program', [DonasiController::class, 'index'])->name('donasi.index');
 Route::get('/program/{slug}', [DonasiController::class, 'show'])->name('donasi.show');
 
 // Rute untuk pengunjung yang BELUM login

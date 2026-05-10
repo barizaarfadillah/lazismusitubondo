@@ -131,14 +131,14 @@ class DonasiController extends Controller
         $formattedNomor = str_pad($nomorUrut, 3, '0', STR_PAD_LEFT);
         
         // Gabungkan menjadi format INV-Tanggal-NomorUrut
-        $kodeTransaksi = 'INV-' . $hariIni . '-' . $formattedNomor;
+        $kodeTransaksi = 'INV-' . $hariIni . $formattedNomor;
 
         // 3. Simpan data donasi ke database
         $donasi = new \App\Models\Donasi();
         $donasi->kode_transaksi = $kodeTransaksi; 
         
         $donasi->id_program  = $program->id_program;
-        $donasi->id_user     = auth()->user()->id_user; // Sesuaikan dengan primary key user Anda
+        $donasi->id_user     = auth()->user()->id_user;
         $donasi->id_rekening = $request->id_rekening;
         $donasi->nominal     = $request->nominal;
         $donasi->pesan_doa   = $request->doa;
@@ -147,8 +147,29 @@ class DonasiController extends Controller
         
         $donasi->save();
 
-        // 4. Arahkan kembali ke katalog dengan pesan sukses
+        // Siapkan pesan Konfirmasi WhatsApp
+        $donasi->load(['program', 'rekening']); // Load relasi untuk diambil namanya
+        $no_wa_admin = '6281233882450'; // GANTI DENGAN NOMOR WA LAZISMU
+        
+        $nominal_rp = 'Rp ' . number_format($donasi->nominal, 0, ',', '.');
+        $nama_donatur = $donasi->is_anonim ? 'Hamba Allah' : auth()->user()->nama;
+        $bank_tujuan = $donasi->rekening->no_rekening ?? 'Rekening Lazismu';
+        
+        $pesan_wa = "Assalamu'alaikum Admin Lazismu Situbondo,\n\n";
+        $pesan_wa .= "Saya *$nama_donatur* ingin mengonfirmasi donasi yang baru saja saya lakukan melalui website:\n\n";
+        $pesan_wa .= "*ID Transaksi:* {$donasi->kode_transaksi}\n";
+        $pesan_wa .= "*Program:* {$donasi->program->nama_program}\n";
+        $pesan_wa .= "*Nominal:* *$nominal_rp*\n";
+        $pesan_wa .= "*Tujuan:* $bank_tujuan\n\n";
+        $pesan_wa .= "Berikut saya lampirkan bukti transfernya. Mohon bantuannya untuk diverifikasi. Terima kasih. 🙏";
+
+        $link_wa = "https://wa.me/{$no_wa_admin}?text=" . urlencode($pesan_wa);
+
+        // 4. Arahkan kembali ke katalog dengan membawa session pesan sukses & link WA
         return redirect()->route('donasi.index')
-                         ->with('donasi_berhasil', true);
+                         ->with('donasi_berhasil', true)
+                         ->with('link_wa', $link_wa); // Kirim link WA ke View
     }
+
+    
 }

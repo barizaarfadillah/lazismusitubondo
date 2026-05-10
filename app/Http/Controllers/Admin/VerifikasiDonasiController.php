@@ -52,8 +52,9 @@ class VerifikasiDonasiController extends Controller
         $donasi = Donasi::where('id_donasi', $id)->firstOrFail();
         $donasi->update(['status' => 'Berhasil']);
 
-        return redirect()->route('admin.verifikasi.index', ['tab' => 'Berhasil'])
-                         ->with('success', 'Donasi berhasil diverifikasi (Diterima).');
+        // Ubah redirect agar kembali ke halaman detail (show)
+        return redirect()->route('admin.verifikasi.show', $id)
+                         ->with('success', 'Alhamdulillah, donasi berhasil diverifikasi. Silakan kirim Kuitansi ke donatur!');
     }
 
     /**

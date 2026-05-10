@@ -106,28 +106,24 @@
 
 @if(session('donasi_berhasil'))
     <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center px-4">
-        <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal()"></div>
         
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center shadow-2xl z-10 relative border border-gray-100 animate-fade-in">
-            <div class="w-16 h-16 bg-green-50 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-5">
+        <div class="bg-white rounded-[2rem] max-w-sm w-full p-8 text-center shadow-2xl z-10 relative border border-gray-100 animate-fade-in">
+            <div class="w-20 h-20 bg-green-50 text-green-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
                 <i class="fa-solid fa-circle-check"></i>
             </div>
             
-            <h3 class="text-lg font-black text-gray-900 mb-2">Alhamdulillah, Terima Kasih!</h3>
+            <h3 class="text-xl font-black text-gray-900 mb-2">Alhamdulillah!</h3>
             
-            <p class="text-xs text-gray-500 leading-relaxed mb-6">
-                Donasi Anda sedang diproses. Kuitansi akan tersedia di riwayat donasi setelah diverifikasi admin.
+            <p class="text-sm text-gray-500 leading-relaxed mb-8">
+                Donasi Anda berhasil dicatat. Klik tombol di bawah untuk mengirimkan bukti transfer ke WhatsApp Admin.
             </p>
             
-            <div class="flex flex-col gap-3">
-                <a href="{{ route('donasi.index') }}" class="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-bold text-sm hover:bg-gray-200 transition">
-                    Kembali ke Katalog
-                </a>
-                
-                <a href="{{ url('/donatur/dashboard') }}" class="w-full bg-lazismu text-white py-3 rounded-xl font-bold text-sm hover:bg-lazismu_hover transition shadow-sm">
-                    Lihat Riwayat Donasi
-                </a>
-            </div>
+            @if(session('link_wa'))
+            <a href="{{ session('link_wa') }}" target="_blank" onclick="closeModal()" class="w-full bg-[#25D366] text-white py-4 rounded-2xl font-bold text-base hover:bg-[#1DA851] transition shadow-lg flex justify-center items-center gap-3">
+                <i class="fa-brands fa-whatsapp text-2xl"></i> Konfirmasi ke WA
+            </a>
+            @endif
         </div>
     </div>
     
