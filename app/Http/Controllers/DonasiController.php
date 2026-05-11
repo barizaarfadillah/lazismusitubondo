@@ -171,5 +171,29 @@ class DonasiController extends Controller
                          ->with('link_wa', $link_wa); // Kirim link WA ke View
     }
 
+    public function landing()
+    {
+        // Ambil data statistik
+        $totalPrograms = Program::count();
+        $totalDonatur  = Donasi::where('status', 'Berhasil')->distinct('id_user')->count();
+        $totalDana     = Donasi::where('status', 'Berhasil')->sum('nominal');
+
+        // Ambil 3 program terbaru/pilihan untuk ditampilkan di Beranda
+        $featuredPrograms = Program::with('kategori')
+            ->withSum(['donasi as donasi_terkumpul' => function($q) {
+                $q->where('status', 'Berhasil');
+            }], 'nominal')
+            // ->latest()
+            // ->take(3)
+            ->get();
+            
+
+        return view('landing', compact('totalPrograms', 'totalDonatur', 'totalDana', 'featuredPrograms'));
+    }
+
+    public function tentang()
+    {
+        return view('tentang');
+    }
     
 }
