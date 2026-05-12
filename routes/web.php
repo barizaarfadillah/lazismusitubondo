@@ -12,11 +12,21 @@ use App\Http\Controllers\Admin\KelolaDonaturController;
 use App\Http\Controllers\Admin\KelolaAdminController;
 use App\Http\Controllers\Admin\VerifikasiDonasiController;
 use App\Http\Controllers\Admin\LaporanDonasiController;
+use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\DonaturController;
+use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\BeritaController;
 
 // Rute Landing page
-Route::get('/', [DonasiController::class, 'landing'])->name('landing');
+Route::get('/', [BerandaController::class, 'landing'])->name('landing');
+
+// Rute Tentang Kami
+Route::get('/tentang-kami', [BerandaController::class, 'tentang'])->name('tentang');
+
+// Rute Artikel
+Route::get('/artikel', [BeritaController::class, 'index'])->name('artikel.index');
+Route::get('/artikel/{slug}', [BeritaController::class, 'show'])->name('artikel.show');
 
 // Rute Katalog dan Detail Program
 Route::get('/program', [DonasiController::class, 'index'])->name('donasi.index');
@@ -96,6 +106,14 @@ Route::middleware('auth')->group(function () {
         // Rute laporan donasi
         Route::get('/laporan-donasi', [LaporanDonasiController::class, 'index'])->name('admin.laporan.index');
         Route::get('/laporan-donasi/cetak', [LaporanDonasiController::class, 'cetak'])->name('admin.laporan.cetak');
+
+        // Rute artikel
+        Route::get('/artikel', [ArtikelController::class, 'index'])->name('admin.artikel.index');
+        Route::get('/artikel/create', [ArtikelController::class, 'create'])->name('admin.artikel.create');
+        Route::post('/artikel', [ArtikelController::class, 'store'])->name('admin.artikel.store');
+        Route::get('/artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('admin.artikel.edit');
+        Route::put('/artikel/{id}', [ArtikelController::class, 'update'])->name('admin.artikel.update');
+        Route::delete('/artikel/{id}', [ArtikelController::class, 'destroy'])->name('admin.artikel.destroy');
     });
 
     // Rute khusus DONATUR

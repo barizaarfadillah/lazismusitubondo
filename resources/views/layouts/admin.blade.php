@@ -50,6 +50,11 @@
                 <span class="ml-2">Kelola Program</span>
             </a>
 
+            <a href="{{ route('admin.artikel.index') }}" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200 {{ request()->is('admin/artikel*') ? 'bg-white/20 font-bold shadow-inner' : '' }}">
+                <i class="fa-solid fa-newspaper w-6 text-center"></i>
+                <span class="ml-2">Kelola Artikel</span>
+            </a>
+
             <a href="{{ route('rekening.index') }}" class="flex items-center p-2 rounded-xl hover:bg-white/20 transition duration-200 {{ request()->is('admin/rekening*') ? 'bg-white/20 font-bold shadow-inner' : '' }}">
                 <i class="fa-solid fa-money-check w-6 text-center"></i>
                 <span class="ml-2">Kelola Rekening</span>

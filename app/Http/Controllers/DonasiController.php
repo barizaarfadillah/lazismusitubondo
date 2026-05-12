@@ -6,6 +6,7 @@ use App\Models\Kategori;
 use App\Models\Program;
 use App\Models\Rekening;
 use App\Models\Donasi;
+use App\Models\Artikel;
 use Illuminate\Http\Request;
 
 class DonasiController extends Controller
@@ -92,10 +93,10 @@ class DonasiController extends Controller
             'id_rekening.required' => 'Silakan pilih salah satu metode pembayaran.'
         ]);
 
-        $program = \App\Models\Program::where('slug', $slug)->firstOrFail();
+        $program = Program::where('slug', $slug)->firstOrFail();
         
         // Ambil data rekening yang dipilih
-        $rekening = \App\Models\Rekening::findOrFail($request->id_rekening);
+        $rekening = Rekening::findOrFail($request->id_rekening);
         
         // Simpan data ke dalam temporary array / session (atau langsung kirim ke view)
         $data_donasi = [
@@ -116,13 +117,13 @@ class DonasiController extends Controller
             'id_rekening' => 'required|exists:rekening,id_rekening',
         ]);
 
-        $program = \App\Models\Program::where('slug', $slug)->firstOrFail();
+        $program = Program::where('slug', $slug)->firstOrFail();
 
         // 2. Buat nomor urut berdasarkan jumlah transaksi di tanggal hari ini
         $hariIni = date('Ymd');
         
         // Hitung jumlah donasi yang dibuat pada hari ini
-        $jumlahHariIni = \App\Models\Donasi::whereDate('created_at', now()->format('Y-m-d'))->count();
+        $jumlahHariIni = Donasi::whereDate('created_at', now()->format('Y-m-d'))->count();
         
         // Tambahkan 1 untuk nomor urut berikutnya
         $nomorUrut = $jumlahHariIni + 1;
@@ -134,7 +135,7 @@ class DonasiController extends Controller
         $kodeTransaksi = 'INV-' . $hariIni . $formattedNomor;
 
         // 3. Simpan data donasi ke database
-        $donasi = new \App\Models\Donasi();
+        $donasi = new Donasi();
         $donasi->kode_transaksi = $kodeTransaksi; 
         
         $donasi->id_program  = $program->id_program;
@@ -170,30 +171,4 @@ class DonasiController extends Controller
                          ->with('donasi_berhasil', true)
                          ->with('link_wa', $link_wa); // Kirim link WA ke View
     }
-
-    public function landing()
-    {
-        // Ambil data statistik
-        $totalPrograms = Program::count();
-        $totalDonatur  = Donasi::where('status', 'Berhasil')->distinct('id_user')->count();
-        $totalDana     = Donasi::where('status', 'Berhasil')->sum('nominal');
-
-        // Ambil 3 program terbaru/pilihan untuk ditampilkan di Beranda
-        $featuredPrograms = Program::with('kategori')
-            ->withSum(['donasi as donasi_terkumpul' => function($q) {
-                $q->where('status', 'Berhasil');
-            }], 'nominal')
-            // ->latest()
-            // ->take(3)
-            ->get();
-            
-
-        return view('landing', compact('totalPrograms', 'totalDonatur', 'totalDana', 'featuredPrograms'));
-    }
-
-    public function tentang()
-    {
-        return view('tentang');
-    }
-    
 }

@@ -98,39 +98,36 @@
 
     <div class="lg:w-1/3">
         <div class="bg-white border border-gray-100 rounded-xl p-6 h-full flex flex-col">
-            <div class="flex justify-between items-center mb-5 flex-shrink-0">
-                <h4 class="text-lg font-bold text-gray-800">Kabar Program</h4>
-                <a href="{{ route('donasi.index') }}" class="text-xs font-bold text-yellow-600 hover:text-yellow-700 transition">Semua</a>
+            <div class="flex justify-between items-center mb-6">
+                <h4 class="text-xl font-bold text-gray-800">Artikel Terbaru</h4>
+                <a href="{{ route('artikel.index') }}" class="text-sm font-semibold text-[#D35400] hover:underline">Lihat Semua</a>
             </div>
 
-            <div class="flex-1 overflow-y-auto pr-2 space-y-4 max-h-[420px] custom-scrollbar">
-                @forelse($kabarTerbaru as $kabar)
-                    <a href="{{ route('donasi.show', $kabar->program->slug) }}" class="bg-gray-50 border border-gray-200 rounded-xl p-4 flex gap-4 hover:border-yellow-400 hover:shadow-md transition group block">
-                        <div class="w-16 h-16 bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden">
-                            @if($kabar->dokumentasi)
-                                <img src="{{ asset('storage/' . $kabar->dokumentasi) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+            <div class="grid grid-cols-1 gap-4">
+                @forelse($artikels as $item)
+                    <a href="{{ route('artikel.show', $item->slug) }}" class="group bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition flex gap-4">
+                        <div class="w-24 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+                            @if($item->thumbnail)
+                                <img src="{{ asset('storage/' . $item->thumbnail) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
                             @else
-                                <div class="w-full h-full flex items-center justify-center text-gray-300">
+                                <div class="w-full h-full flex items-center justify-center text-gray-400">
                                     <i class="fa-solid fa-newspaper text-xl"></i>
                                 </div>
                             @endif
                         </div>
 
                         <div class="flex flex-col justify-center overflow-hidden">
-                            <div class="flex flex-wrap items-center gap-2 mb-1">
-                                <span class="px-2 py-0.5 bg-yellow-50 text-yellow-600 text-[9px] font-bold rounded-md uppercase whitespace-nowrap">
-                                    {{ Str::limit($kabar->program->nama_program, 15) }}
-                                </span>
-                                <span class="text-gray-400 text-[9px]">{{ $kabar->created_at->diffForHumans() }}</span>
-                            </div>
-                            <h5 class="font-bold text-gray-800 text-sm leading-tight group-hover:text-yellow-600 transition line-clamp-2">
-                                {{ $kabar->judul }}
+                            <h5 class="text-xs font-bold text-gray-800 line-clamp-2 leading-tight group-hover:text-[#D35400] transition-colors">
+                                {{ $item->judul }}
                             </h5>
+                            <p class="text-[11px] text-gray-400 mt-1">
+                                <i class="fa-regular fa-calendar mr-1"></i> {{ $item->created_at->format('d M Y') }}
+                            </p>
                         </div>
                     </a>
                 @empty
-                    <div class="bg-gray-50 border border-dashed border-gray-200 rounded-2xl p-8 text-center h-full flex flex-col items-center justify-center">
-                        <p class="text-gray-400 text-xs">Belum ada kabar terbaru.</p>
+                    <div class="py-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-200 text-gray-400">
+                        <p class="text-sm">Belum ada artikel terbaru untuk ditampilkan.</p>
                     </div>
                 @endforelse
             </div>

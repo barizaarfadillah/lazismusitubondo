@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Donasi;
+use App\Models\Artikel;
 
 class DonaturController extends Controller
 {
@@ -53,11 +54,10 @@ class DonaturController extends Controller
 
         // Ambil 3 kabar program terbaru dari program-program tersebut
         // Asumsi: Anda memiliki model KabarProgram yang berelasi dengan Program
-        $kabarTerbaru = \App\Models\KabarProgram::with('program')
-                            ->whereIn('id_program', $programIds)
-                            ->latest()
-                            ->take(3)
-                            ->get();
+        $artikels = Artikel::where('status', 'Publish')
+                       ->latest()
+                       ->take(4)
+                       ->get();
 
         // 3. STATISTIK GRAFIK (6 Bulan Terakhir)
         $chartLabels = [];
@@ -81,7 +81,7 @@ class DonaturController extends Controller
         }
 
         return view('donatur.dashboard', compact(
-            'totalDonasi', 'totalProgram', 'donasiTerakhir', 'kategoriFavorit', 'kabarTerbaru', 'chartLabels', 'chartData'
+            'totalDonasi', 'totalProgram', 'donasiTerakhir', 'kategoriFavorit', 'artikels', 'chartLabels', 'chartData'
         ));
     }
 

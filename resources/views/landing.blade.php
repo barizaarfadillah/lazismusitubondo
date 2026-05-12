@@ -90,8 +90,10 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @foreach($featuredPrograms->take(6) as $p)
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+                {{-- Ubah div menjadi tag <a> dan arahkan ke detail program --}}
+                <a href="{{ route('donasi.show', $p->slug) }}" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
                     
+                    {{-- Banner/Thumbnail --}}
                     <div class="relative h-52 overflow-hidden bg-gray-100">
                         @if(!empty($p->banner))
                             <img src="{{ asset('storage/' . $p->banner) }}" alt="{{ $p->nama_program }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
@@ -104,6 +106,7 @@
                         </div>
                     </div>
 
+                    {{-- Konten --}}
                     <div class="p-6 flex flex-col flex-1">
                         <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-lazismu transition-colors leading-snug">
                             {{ $p->nama_program }}
@@ -132,12 +135,13 @@
                                 </div>
                             </div>
 
-                            <a href="{{ route('donasi.show', $p->slug) }}" class="block w-full text-center px-4 py-3 bg-orange-50 text-orange-600 rounded-xl font-bold hover:bg-lazismu hover:text-white transition-all shadow-sm">
+                            {{-- Ubah <a> di dalam tombol menjadi <div> agar tidak terjadi nested link (link di dalam link) --}}
+                            <div class="block w-full text-center px-4 py-3 bg-orange-50 text-orange-600 rounded-xl font-bold group-hover:bg-lazismu group-hover:text-white transition-all shadow-sm">
                                 Donasi Sekarang
-                            </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
 
@@ -149,7 +153,67 @@
         </div>
     </div>
 
-    
+    <div class="bg-white py-20">
+        <div class="max-w-7xl mx-auto px-4 py-8 border-t border-gray">
+            <div class="flex justify-center text-center mb-12">
+                <div class="flex flex-col items-center">
+                    <img class="h-10 w-auto" src="{{ asset('images/Padi-Lazismu.jpg') }}" alt="Logo Lazismu">
+                    <h2 class="text-3xl font-black text-gray-900">Kabar & Artikel Terbaru</h2>
+                    <p class="text-gray-500 mt-2 text-lg">Ikuti perkembangan penyaluran donasi dan edukasi seputar ZIS.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                @forelse($artikels as $artikel)
+                    <a href="{{ route('artikel.show', $artikel->slug) }}" class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 group flex flex-col">
+                        <div class="relative h-48 overflow-hidden bg-gray-100">
+                            @if($artikel->thumbnail)
+                                <img src="{{ asset('storage/' . $artikel->thumbnail) }}" alt="{{ $artikel->judul }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center text-gray-400">
+                                    <i class="fa-regular fa-image text-4xl"></i>
+                                </div>
+                            @endif
+                            <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-[#D35400] shadow-sm">
+                                {{ $artikel->kategori }}
+                            </div>
+                        </div>
+
+                        <div class="p-6 flex flex-col flex-1">
+                            <div class="flex items-center gap-4 text-xs text-gray-500 mb-3">
+                                <span class="flex items-center gap-1"><i class="fa-regular fa-calendar"></i> {{ $artikel->created_at->format('d M Y') }}</span>
+                                <span class="flex items-center gap-1"><i class="fa-regular fa-eye"></i> {{ $artikel->views }}x dibaca</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#D35400] transition-colors">
+                                {{ $artikel->judul }}
+                            </h3>
+                            
+                            <p class="text-gray-600 text-sm line-clamp-3 mb-4">
+                                {{ Str::limit(strip_tags($artikel->konten), 100) }}
+                            </p>
+
+                            <div class="mt-auto pt-4 border-t border-gray-50 flex items-center text-[#D35400] font-semibold text-sm">
+                                Baca Selengkapnya <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                            </div>
+                        </div>
+                    </a>
+                @empty
+                    <div class="col-span-3 text-center py-12 text-gray-400 bg-gray-50 rounded-3xl border border-dashed border-gray-200">
+                        <i class="fa-regular fa-newspaper text-4xl mb-3 block"></i>
+                        <p>Belum ada artikel yang dipublikasikan.</p>
+                    </div>
+                @endforelse
+            </div>
+
+            <div class="mt-8 flex justify-center">
+            <a href="{{ route('artikel.index') }}" class="inline-flex items-center justify-center px-8 py-4 bg-white text-orange-600 border-2 border-orange-100 rounded-2xl font-bold text-lg hover:bg-lazismu hover:text-white hover:border-lazismu transition-all shadow-sm group">
+                Lihat Semua Artikel
+                <i class="fa-solid fa-arrow-right ml-3 transition-transform group-hover:translate-x-1"></i>
+            </a>
+        </div>
+        </div>
+    </div>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {

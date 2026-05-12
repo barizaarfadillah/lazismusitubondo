@@ -34,7 +34,16 @@
 
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="{{ url('/') }}" class="text-gray-600 hover:text-lazismu font-bold text-sm transition duration-300">
+                        Beranda
+                    </a>
+                    <a href="{{ url('/tentang-kami') }}" class="text-gray-600 hover:text-lazismu font-bold text-sm transition duration-300">
+                        Tentang Kami
+                    </a>
+                    <a href="{{ route('donasi.index') }}" class="text-gray-600 hover:text-lazismu font-bold text-sm transition duration-300">
                         Program Donasi
+                    </a>
+                    <a href="{{ route('artikel.index') }}" class="text-gray-600 hover:text-lazismu font-bold text-sm transition duration-300">
+                        Artikel
                     </a>
 
                     <div class="h-6 w-px bg-gray-200"></div>
@@ -103,7 +112,16 @@
         <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-xl z-40">
             <div class="px-4 pt-3 pb-6 space-y-2">
                 <a href="{{ url('/') }}" class="block px-4 py-3 rounded-xl text-base font-bold text-gray-700 hover:text-lazismu hover:bg-orange-50 transition">
-                    <i class="fa-solid fa-box-open w-6 text-center mr-2 text-gray-400"></i> Program Donasi
+                    Beranda
+                </a>
+                <a href="{{ url('/tentang-kami') }}" class="block px-4 py-3 rounded-xl text-base font-bold text-gray-700 hover:text-lazismu hover:bg-orange-50 transition">
+                    Tentang Kami
+                </a>
+                <a href="{{ url('/program') }}" class="block px-4 py-3 rounded-xl text-base font-bold text-gray-700 hover:text-lazismu hover:bg-orange-50 transition">
+                    Program Donasi
+                </a>
+                <a href="{{ route('artikel.index') }}" class="block px-4 py-3 rounded-xl text-base font-bold text-gray-700 hover:text-lazismu hover:bg-orange-50 transition">
+                    Artikel
                 </a>
 
                 @guest
@@ -167,20 +185,20 @@
                             </div>
                             <span class="text-gray-500 leading-relaxed">
                                 Kantor Lazismu Situbondo<br>
-                                Jl. PB. Sudirman No. 123, Situbondo, Jawa Timur
+                                Jl. Cendrawasih RT 02 / RW 03, Linkungan DAM, Dawuhan, Kec. Situbondo, Kabupaten Situbondo, Jawa Timur 68311
                             </span>
                         </li>
                         <li class="flex items-center gap-4">
                             <div class="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-lazismu shrink-0">
                                 <i class="fa-solid fa-phone"></i>
                             </div>
-                            <span class="text-gray-500 font-medium">(0338) 123456</span>
+                            <span class="text-gray-500 font-medium">0852-3183-9321</span>
                         </li>
                         <li class="flex items-center gap-4">
                             <div class="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-lazismu shrink-0">
                                 <i class="fa-solid fa-envelope"></i>
                             </div>
-                            <span class="text-gray-500 font-medium">info@lazismu-situbondo.org</span>
+                            <span class="text-gray-500 font-medium">lazismukabsitubondo@gmail.com</span>
                         </li>
                     </ul>
                 </div>
@@ -188,16 +206,16 @@
                 <div>
                     <h4 class="text-gray-800 font-black text-sm uppercase tracking-widest mb-6">Media Sosial</h4>
                     <div class="flex items-center space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-lazismu hover:bg-lazismu hover:text-white transition shadow-sm">
+                        <a href="https://wa.me/6285231839321" class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-lazismu hover:bg-lazismu hover:text-white transition shadow-sm">
                             <i class="fa-brands fa-whatsapp text-base"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-lazismu hover:bg-lazismu hover:text-white transition shadow-sm">
+                        <a href="https://www.instagram.com/lazismu_situbondo/" class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-lazismu hover:bg-lazismu hover:text-white transition shadow-sm">
                             <i class="fa-brands fa-instagram text-base"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-lazismu hover:bg-lazismu hover:text-white transition shadow-sm">
+                        <a href="https://www.facebook.com/profile.php?id=100078368963404" class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-lazismu hover:bg-lazismu hover:text-white transition shadow-sm">
                             <i class="fa-brands fa-facebook-f text-base"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-lazismu hover:bg-lazismu hover:text-white transition shadow-sm">
+                        <a href="https://www.tiktok.com/@lazismusitubondo?_t=8kr0x0mPe9x&_r=1" class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-lazismu hover:bg-lazismu hover:text-white transition shadow-sm">
                             <i class="fa-brands fa-tiktok text-base"></i>
                         </a>
                     </div>

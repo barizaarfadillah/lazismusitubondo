@@ -38,14 +38,10 @@ class DashboardController extends Controller
         $latestPending = Donasi::with(['user', 'program'])
                                ->where('status', 'pending')
                                ->latest()
-                               ->take(5)
+                               ->take(3)
                                ->get();
 
-        // 4. RASIO KEBERHASILAN (Success Rate)
-        $totalSemuaTransaksi = Donasi::count();
-        $transaksiBerhasil = Donasi::where('status', 'berhasil')->count();
-        $successRate = $totalSemuaTransaksi > 0 ? round(($transaksiBerhasil / $totalSemuaTransaksi) * 100, 1) : 0;
-
+        
         // 5. TOP 5 PROGRAM (Leaderboard berdasarkan nominal masuk)
         $topPrograms = Program::withSum(['donasi' => function($query) {
             $query->where('status', 'berhasil');
@@ -71,7 +67,7 @@ class DashboardController extends Controller
         // Masukkan ke dalam compact()
         return view('admin.dashboard', compact(
             'pendingDonasi', 'danaBulanIni', 'totalDonatur', 'programAktif', 
-            'chartData', 'latestPending', 'successRate', 'topPrograms',
+            'chartData', 'latestPending', 'topPrograms',
             'urgentPrograms', 'topDonors'
         ));
     }

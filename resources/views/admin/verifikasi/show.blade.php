@@ -101,7 +101,7 @@
                         $nama_donatur = $donasi->is_anonim ? 'Hamba Allah' : ($donasi->user->nama ?? 'Donatur');
                         
                         // Rangkai Pesan (Kuitansi + Doa)
-                        $pesan_wa = "Assalamu'alaikum Kak *$nama_donatur*, \n\n";
+                        $pesan_wa = "Assalamu'alaikum Bapak/Ibu *$nama_donatur*, \n\n";
                         $pesan_wa .= "Alhamdulillah, kami dari *Lazismu Situbondo* menginformasikan bahwa donasi Anda telah kami terima dengan rincian:\n\n";
                         $pesan_wa .= "*ID Transaksi:* {$donasi->kode_transaksi}\n";
                         $pesan_wa .= "*Tanggal:* $tgl_donasi\n";

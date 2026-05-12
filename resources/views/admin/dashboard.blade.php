@@ -7,9 +7,9 @@
         <p class="text-sm text-gray-500">Selamat datang, {{ Auth::user()->nama }}. Berikut adalah ringkasan sistem Lazismu saat ini.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 flex items-center">
-            <div class="p-3 rounded-full bg-orange-100 text-orange-600 mr-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-3 flex items-center">
+            <div class="text-orange-600 mr-4">
                 <i class="fas fa-clock text-2xl"></i>
             </div>
             <div>
@@ -18,8 +18,8 @@
             </div>
         </div>
         
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 flex items-center">
-            <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-3 flex items-center">
+            <div class="text-green-600  mr-4">
                 <i class="fas fa-wallet text-2xl"></i>
             </div>
             <div>
@@ -28,8 +28,8 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 flex items-center">
-            <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-3 flex items-center">
+            <div class="text-blue-600  mr-4">
                 <i class="fas fa-users text-2xl"></i>
             </div>
             <div>
@@ -38,18 +38,8 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 flex items-center">
-            <div class="p-3 rounded-full {{ $successRate >= 70 ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600' }} mr-4">
-                <i class="fas fa-chart-line text-2xl"></i>
-            </div>
-            <div>
-                <p class="text-sm text-gray-500 font-medium">Rasio Keberhasilan</p>
-                <p class="text-2xl font-bold text-gray-800">{{ $successRate }}%</p>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 flex items-center">
-            <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-3 flex items-center">
+            <div class="text-purple-600 mr-4">
                 <i class="fas fa-box-open text-2xl"></i>
             </div>
             <div>
