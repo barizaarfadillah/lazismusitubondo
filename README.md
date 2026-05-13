@@ -81,4 +81,4 @@ Sistem ini dikembangkan untuk keperluan **Lazismu Situbondo**. Hak cipta kode pr
 
 ---
 
-**Developed with ❤️ by [BARIZA ARFADILLAH ABQARIY](https://github.com/username)**
+**Developed with ❤️ by [BARIZA ARFADILLAH ABQARIY](https://github.com/barizaarfadillah)**
