@@ -32,3 +32,53 @@ Sistem Informasi Filantropi berbasis web yang dirancang untuk mempermudah pengel
 - **Icons:** FontAwesome 6
 
 ---
+
+## ⚙️ Instalasi Lokal
+
+Jika Anda ingin menjalankan proyek ini di lingkungan lokal (seperti Laragon/XAMPP), ikuti langkah berikut:
+
+1. **Clone repositori:**
+   ```bash
+   git clone https://github.com/username/lazismu-situbondo.git
+   ```
+
+2. **Instal dependensi PHP:**
+   ```bash
+   composer install
+   ```
+
+3. **Konfigurasi Environment:**
+   Salin file `.env.example` menjadi `.env` dan sesuaikan pengaturan database Anda.
+   ```bash
+   cp .env.example .env
+   ```
+
+4. **Generate App Key:**
+   ```bash
+   php artisan key:generate
+   ```
+
+5. **Migrasi Database:**
+   ```bash
+   php artisan migrate --seed
+   ```
+
+6. **Link Storage (Penting untuk Gambar):**
+   ```bash
+   php artisan storage:link
+   ```
+
+7. **Jalankan Server:**
+   ```bash
+   php artisan serve
+   ```
+
+---
+
+## 📄 Lisensi
+
+Sistem ini dikembangkan untuk keperluan **Lazismu Situbondo**. Hak cipta kode program diatur sesuai kesepakatan pengembang dan lembaga.
+
+---
+
+**Developed with ❤️ by [BARIZA ARFADILLAH ABQARIY](https://github.com/username)**
