@@ -12,17 +12,16 @@ class BerandaController extends Controller
     public function landing()
     {
         // Ambil data statistik
-        $totalPrograms = Program::count();
+        $totalPrograms = Program::where('status', 'Aktif')->count();
         $totalDonatur  = Donasi::where('status', 'Berhasil')->distinct('id_user')->count();
         $totalDana     = Donasi::where('status', 'Berhasil')->sum('nominal');
 
         // Ambil 3 program terbaru/pilihan untuk ditampilkan di Beranda
-        $featuredPrograms = Program::with('kategori')
+        $featuredPrograms = Program::where('status', 'Aktif')
+            ->with('kategori')
             ->withSum(['donasi as donasi_terkumpul' => function($q) {
                 $q->where('status', 'Berhasil');
             }], 'nominal')
-            // ->latest()
-            // ->take(3)
             ->get();
             
         $artikels = Artikel::where('status', 'Publish')->latest()->take(3)->get();

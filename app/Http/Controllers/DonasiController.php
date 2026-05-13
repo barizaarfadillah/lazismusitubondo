@@ -17,7 +17,8 @@ class DonasiController extends Controller
     public function index(Request $request)
     {
         // 1. Siapkan query dasar
-        $query = Program::with('kategori')
+        $query = Program::where('status', 'Aktif')
+            ->with('kategori')
             ->withSum(['donasi as donasi_terkumpul' => function($q) {
                 $q->where('status', 'Berhasil');
             }], 'nominal');
@@ -42,7 +43,8 @@ class DonasiController extends Controller
      */
     public function show($slug)
     {
-        $program = Program::with(['kategori', 'kabar_program' => function($q) {
+        $program = $program = Program::where('status', 'Aktif')
+            ->with(['kategori', 'kabar_program' => function($q) {
                 $q->latest();
             }])
             ->withSum(['donasi as donasi_terkumpul' => function($q) {
