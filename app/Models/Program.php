@@ -43,7 +43,7 @@ class Program extends Model
 
     public function rekenings()
     {
-        return $this->belongsToMany(Rekening::class, 'detail_rekening_program', 'id_program', 'id_rekening');
+        return $this->belongsToMany(Rekening::class, 'detail_rekening_program', 'id_program', 'id_rekening')->withTimestamps();;
     }
 
     public function getRouteKeyName()

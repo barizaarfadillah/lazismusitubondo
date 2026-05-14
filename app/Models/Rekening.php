@@ -18,6 +18,6 @@ class Rekening extends Model
 
     public function programs()
     {
-        return $this->belongsToMany(Program::class, 'detail_rekening_program', 'id_rekening', 'id_program');
+        return $this->belongsToMany(Program::class, 'detail_rekening_program', 'id_rekening', 'id_program')->withTimestamps();;
     }
 }
