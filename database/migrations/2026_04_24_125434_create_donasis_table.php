@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('donasi', function (Blueprint $table) {
             $table->id('id_donasi');
+            $table->string('kode_transaksi')->unique();
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_program');
             $table->unsignedBigInteger('id_rekening');

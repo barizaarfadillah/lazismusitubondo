@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('rekening', function (Blueprint $table) {
             $table->id('id_rekening');
             $table->string('nama_bank', 50);
+            $table->string('logo')->nullable();
             $table->string('no_rekening', 30);
             $table->string('atas_nama', 100);
             $table->string('qris')->nullable();

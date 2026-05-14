@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('no_telp', 15)->nullable();
             $table->text('alamat')->nullable();
-            $table->string('foto')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->string('status_user', 20)->default('Aktif');
             $table->timestamps();
