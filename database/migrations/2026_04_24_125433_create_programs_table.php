@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_program');
             $table->unsignedBigInteger('id_kategori'); 
             $table->string('nama_program');
+            $table->string('slug')->unique();
             $table->text('deskripsi');
             $table->double('target_dana');
             $table->string('banner')->nullable();
